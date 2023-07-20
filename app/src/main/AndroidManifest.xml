@@ -14,7 +14,7 @@
         android:name=".SubwayApplication"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".data.presentation.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

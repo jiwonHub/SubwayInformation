@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/stations_dest"
-        android:name="com.example.subway.presentation.stations.StationsFragment"
+        android:name="com.example.subway.data.presentation.stations.StationsFragment"
         tools:layout="@layout/fragment_stations">
 
         <action
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/station_arrivals_dest"
-        android:name="com.example.subway.presentation.stationarrivals.StationArrivalFragment"
+        android:name="com.example.subway.data.presentation.stationarrivals.StationArrivalFragment"
         tools:layout="@layout/fragment_station_arrivals">
 
     </fragment>

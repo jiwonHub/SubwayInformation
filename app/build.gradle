@@ -1,16 +1,19 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.gms.google-services'
+    id 'kotlin-kapt'
+    id("com.google.devtools.ksp")
 }
 
 android {
     namespace 'com.example.subway'
-    compileSdk 34
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.subway"
         minSdk 24
-        targetSdk 34
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -24,8 +27,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_9
+        targetCompatibility JavaVersion.VERSION_1_9
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -47,6 +50,7 @@ dependencies {
 
     // Coroutine
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.4.3"
 
     // Koin
     implementation 'io.insert-koin:koin-core:3.4.0'
@@ -56,7 +60,16 @@ dependencies {
     implementation "io.insert-koin:koin-androidx-navigation:3.4.0"
     implementation "io.insert-koin:koin-androidx-compose:3.4.0"
 
+    // Jetpack Room
+    implementation 'androidx.room:room-runtime:2.3.0'
+    implementation 'androidx.room:room-ktx:2.3.0'
+    ksp("androidx.room:room-compiler:2.5.0")
+
     // Jetpack Navigation
     implementation 'androidx.navigation:navigation-fragment-ktx:2.6.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
+
+    // Firebase
+    implementation platform('com.google.firebase:firebase-bom:32.2.0')
+    implementation 'com.google.firebase:firebase-storage-ktx'
 }

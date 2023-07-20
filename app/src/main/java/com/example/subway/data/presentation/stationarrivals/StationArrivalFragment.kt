@@ -1,4 +1,4 @@
-package com.example.subway.presentation.stationarrivals
+package com.example.subway.data.presentation.stationarrivals
 
 import androidx.fragment.app.Fragment
 
