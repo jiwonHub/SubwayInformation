@@ -26,6 +26,20 @@ interface StationDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCrossReferences(reference: List<StationSubwayCrossRefEntity>)
+
+    @Transaction
+    suspend fun insertStationSubways(stationSubways: List<Pair<StationEntity, SubwayEntity>>) {
+        insertStations(stationSubways.map { it.first })
+        insertSubways(stationSubways.map { it.second })
+        insertCrossReferences(
+            stationSubways.map { (station, subway) ->
+                StationSubwayCrossRefEntity(
+                    station.stationName,
+                    subway.subwayId
+                )
+            }
+        )
+    }
 }
 // StationDao 인터페이스를 사용하여 데이터베이스의 쿼리를 실행하고, 데이터를 삽입, 조회, 업데이트, 삭제하는 등의 작업을 수행할 수 있다.
 // Flow를 통해 데이터베이스에서 변경 사항을 관찰하고, suspend키워드를 이용하여 비동기적으로 데이터를 삽입하는 작업을 수행할 수 있다.

@@ -35,17 +35,7 @@ class StationRepositoryImpl(
         if (lastDatabaseUpdatedTimeMillis == null || fileUpdatedTimeMillis > lastDatabaseUpdatedTimeMillis) {
             // 데이터베이스의 업데이트 시간이 존재하지 않거나, 데이터 소스의 업데이트 시간이 데이터베이스의 업데이트 시간보다 최신인 경우에만
             // 데이터를 새로고침하고 데이터베이스에 저장한다.
-            val stationSubways = stationApi.getStationSubways() // stationApi를 통해 원격 데이터 소스로부터 stationSubways를 가져온다.
-            stationDao.insertStations(stationSubways.map { it.first }) // stationSubways 리스트에서 각 원소의 첫 번째 값을 추출하여 stationDao를 통해 데이터베이스에 Station 데이터를 삽입한다.
-            stationDao.insertSubways(stationSubways.map { it.second }) // stationSubways 리스트에서 각 원소의 두 번째 값을 추출하여 stationDao를 통해 데이터베이스에 Subway 데이터를 삽입한다.
-            stationDao.insertCrossReferences(
-                stationSubways.map { (station, subway) -> // stationSubways 리스트의 각 원소에 대해 Station과 Subway를 조합하여 StationSubwayCrossRefEntity 객체 생성.
-                    StationSubwayCrossRefEntity( // 데이터베이스에 삽입
-                        station.stationName,
-                        subway.subwayId
-                    )
-                }
-            )
+            stationDao.insertStationSubways(stationApi.getStationSubways())
             preferenceManager.putLong(KEY_LAST_DATABASE_UPDATED_TIME_MILLIS, fileUpdatedTimeMillis) // fileUpdatedTimeMillis를 preferenceManager를 통해 설정 값으로 저장.
             // 데이터베이스의 업데이트 시간을 나타내며, 다음에 refreshStations()가 호출될 때 비교되어 데이터를 새로 고칠지를 결정하는데 사용된다.
         }

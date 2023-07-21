@@ -6,6 +6,9 @@ import com.example.subway.data.api.StationStorageApi
 import com.example.subway.data.db.AppDatabase
 import com.example.subway.data.preference.PreferenceManager
 import com.example.subway.data.preference.SharedPreferenceManager
+import com.example.subway.data.presentation.stations.StationsContract
+import com.example.subway.data.presentation.stations.StationsFragment
+import com.example.subway.data.presentation.stations.StationsPresenter
 import com.example.subway.data.repository.StationRepository
 import com.example.subway.data.repository.StationRepositoryImpl
 import com.google.firebase.ktx.Firebase
@@ -18,6 +21,10 @@ import org.koin.dsl.module
 val appModule = module {
     single { Dispatchers.IO } // IO 디스패처 정의
     // 주로 네트워크 요청 & 데이터베이스 엑세스 등 비동기 작업에 사용
+
+    scope<StationsFragment> {
+        scoped<StationsContract.Presenter> { StationsPresenter(getSource()!!, get()) }
+    }
 
     // Database
     single { AppDatabase.build(androidApplication()) } // androidApplication()함수로 Context를 얻고 이를 기반으로 데이터베이스 빌드
